@@ -2,6 +2,10 @@
 
 **Necessary modules numpy, pandas, scipy.**
 
+### SVD not implemented so feature matrix with multi-collinear predictors will not give correct regression coefficients. In short, Multi-collinear predictors are not handled in the model, so please make sure the design matrix is not multi-collinear while using MUR. Soon SVD will be implemented.
+
+### Currently the version is $\alpha$
+
 ### Files
  - MUR Implementation.iynb explains step by step process
  - Main.py is complete implementation of MUR without exploitation.
@@ -138,7 +142,70 @@ print(scipy.stats.t.cdf(-4.342,10) + (1- scipy.stats.t.cdf(4.342,10)),(1 - scipy
 >
 > - The adjusted R-squared value takes into account the number of predictors in the model and adjusts the R-squared value accordingly
 
-Made with ❤️
 
----
+
+# Main File Usage (MUR.py) 
+
+### To compute the Multiple linear regression and to get all values 
+
+```py
+from MUR import MUR
+MUR(X,y).summary #X is the Features Data frame, y is pandas.series includes r squared and adjusted r squared.
+```
+
+### To get the Regression coefficients alone 
+
+```py
+from MUR import MUR
+MUR.RegressionCoffMatrix(X,y) #X is the Features Data frame, y is pandas.series
+```
+Gives back dictionary comprising key as feature names and regression coefficients as values (Including intercept).
+
+
+### To get the Standard errors of regression coefficient.
+
+```py
+from MUR import MUR
+MUR.StandardErr(X,y) #X is the Features Data frame, y is pandas.series
+```
+Returns Standard error of regression coefficients and regression coefficients of associated features as a dictionary (Including intercept).
+
+
+### To get T statistic and p values
+
+```py
+from MUR import MUR
+MUR.TStatisticWithPValues(X,y) #X is the Features Data frame, y is pandas.series
+```
+
+Returns T-statistic,p-values, Standard error of regression coefficients and regression coefficients of associated features as a dictionary.
+
+
+### To get y_pred and y to compare.
+
+```py
+from MUR import MUR
+MUR.predictYValues(X,y) #X is the Features Data frame, y is pandas.series
+```
+
+Returns Predicted values of y and y in a data frame to compare.
+
+### To get an df with constant column to your data frame.
+
+```py
+from MUR import MUR
+MUR.attach_ConstantCols(X,y)
+```
+It takes design matrix or X_train in context attaches ones columns to it.
+
+
+### Things to keep in mind.
+
+- Make sure that the X (feature matrix) does not have **collinear predictors among themselves (no Multi-collinear predictors)** before using MUR class.
+
+- Don't the default values of ``raw`` and ``Regression_Coff`` to anything as they are *__reserved to internal use__*. They left intentionally to give sense what happens internally.
+- If you got feature named **Const** in your predictor X (features data frame) change the feature name to something else.
+
+Made with ❤️
+____
 
