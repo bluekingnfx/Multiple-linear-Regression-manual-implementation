@@ -1,6 +1,9 @@
 # Under the hood of Multiple Linear Regression (MLR)
 
-**Necessary modules numpy, pandas, scipy.**
+**You can install requried modules from requirements.txt, Enter the following code command prompt**
+```bash
+pip install -r requirements.txt
+```
 
 ### SVD not implemented so feature matrix with multi-collinear predictors will not give correct regression coefficients. In short, Multi-collinear predictors are not handled in the model, so please make sure the design matrix is not multi-collinear while using MUR. Soon SVD will be implemented.
 
